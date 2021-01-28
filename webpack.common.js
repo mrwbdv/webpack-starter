@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const PATHS = {
   src: path.join(__dirname, "./src"),
@@ -79,6 +80,14 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
+        loader: "url-loader"
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: "url-loader"
+      }
     ]
   },
   plugins: [
@@ -92,6 +101,9 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "[name].[hash:7].bundle.css",
     }),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new CopyWebpackPlugin({
+      patterns: [{ from: PATHS.src + "/assets", to: "assets" }],
+    })
   ],
 };
