@@ -24,7 +24,6 @@ module.exports = {
   output: {
     path: PATHS.dist,
     filename: "[name].[hash:7].bundle.js",
-    publicPath: "/",
   },
   resolve: {
     extensions: [".js"],
@@ -82,7 +81,11 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
-        loader: "url-loader"
+        loader: "url-loader",
+         options: {
+          limit: 3000,
+          name: 'assets/img/[name].[hash:7].[ext]'
+        }
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,

@@ -3,6 +3,10 @@
 @import 'utils/fonts';
 @import 'utils/reset';
 
+body {
+  font-family: 'Montserrat-Regular', sans-serif;
+}
+
 .wrapper {
   display: flex;
   margin: 0 auto;
