@@ -4,11 +4,14 @@ const path = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const PATHS = {
   src: path.join(__dirname, "./src"),
   dist: path.join(__dirname, "./dist"),
 };
+
+const plugins = require("./postcss.config");
 
 module.exports = {
   externals: {
@@ -21,6 +24,12 @@ module.exports = {
     path: PATHS.dist,
     filename: "[name].[hash:7].bundle.js",
     publicPath: "/",
+  },
+  resolve: {
+    extensions: [".js"],
+    alias: {
+      img: PATHS.src + "/assets/img",
+    },
   },
   module: {
     rules: [
@@ -37,7 +46,10 @@ module.exports = {
             options: {
               sourceMap: true,
             },
-          }
+          },
+          {
+            loader: "postcss-loader"
+          },
         ],
       },
       {
@@ -49,6 +61,9 @@ module.exports = {
             options: {
               sourceMap: true,
             },
+          },
+          {
+            loader: "postcss-loader"
           },
           {
             loader: "sass-loader",
@@ -72,5 +87,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "[name].[hash:7].bundle.css",
     }),
+    new CleanWebpackPlugin()
   ],
 };
