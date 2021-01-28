@@ -3,6 +3,7 @@ const path = require("path");
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const PATHS = {
   src: path.join(__dirname, "./src"),
@@ -26,7 +27,38 @@ module.exports = {
       {
         test: /\.pug$/,
         use: ["pug-loader"],
-      }
+      },
+      {
+        test: /\.css$/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true,
+            },
+          }
+        ],
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true,
+            },
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: true,
+              implementation: require("dart-sass"),
+            },
+          },
+        ],
+      },
     ]
   },
   plugins: [
@@ -36,6 +68,9 @@ module.exports = {
     }),
     new WebpackNotifierPlugin({
       emoji: true,
-    })
+    }),
+    new MiniCssExtractPlugin({
+      filename: "[name].[hash:7].bundle.css",
+    }),
   ],
 };
