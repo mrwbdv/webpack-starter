@@ -7,7 +7,8 @@
   "author": "Akmaral Serikova <mrwbdv@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "webpack serve --config ./webpack.dev.js --mode=development --progress --open"
+    "start": "webpack serve --config ./webpack.dev.js --mode=development --progress --open",
+    "build": "webpack --config webpack.prod.js"
   },
   "devDependencies": {
     "html-webpack-plugin": "^4.5.1",
